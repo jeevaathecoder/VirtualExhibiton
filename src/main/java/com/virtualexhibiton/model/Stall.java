@@ -1,6 +1,7 @@
 package com.virtualexhibiton.model;
 import jakarta.persistence.*;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 
@@ -13,11 +14,13 @@ import lombok.*;
 @NoArgsConstructor
 public class Stall {
 
-    @Id
+
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "stall_name")
+    @Column(name = "stall_name",nullable = false)
     private String stallName;
 
     @Column(name = "stall_description")
@@ -34,6 +37,7 @@ public class Stall {
 
     @OneToOne
     @JoinColumn(name = "user_id")
+    @NotBlank
     private User user;
 
     

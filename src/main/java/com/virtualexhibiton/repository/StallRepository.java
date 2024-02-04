@@ -2,9 +2,14 @@ package com.virtualexhibiton.repository;
 
 import com.virtualexhibiton.model.Stall;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface StallRepository extends JpaRepository<Stall, Long> {
-    // Additional methods can be added for specific queries if needed
+ 
+	@Query("SELECT s FROM Stall s WHERE s.user.id = :id")
+	Stall findByRoleId(@Param("id") Long id);
+    
 }

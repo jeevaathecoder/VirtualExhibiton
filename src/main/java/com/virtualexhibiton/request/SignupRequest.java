@@ -38,8 +38,10 @@ public class SignupRequest {
 
     @Lob
     private byte[] profile;
+    
+    private Long user_type_id;
 
-    private List<String> roles = new ArrayList<>();
+    
 
     
 }
