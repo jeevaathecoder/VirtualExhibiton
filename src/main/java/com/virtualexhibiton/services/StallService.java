@@ -5,6 +5,7 @@ import com.virtualexhibiton.model.Stall;
 import java.util.List;
 
 public interface StallService {
+	
     public Stall saveStall(Stall stall);
 
     public List<Stall> fetchStallList();

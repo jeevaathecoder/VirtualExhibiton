@@ -1,8 +1,11 @@
 package com.virtualexhibiton.controllers;
 
 import com.virtualexhibiton.model.Stall;
+import com.virtualexhibiton.response.MessageResponse;
 import com.virtualexhibiton.services.StallService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,13 +13,20 @@ import java.util.List;
 @RestController
 @RequestMapping("/stall")
 public class StallController{
+	
     @Autowired
     private StallService stallService;
 
     @PostMapping(value = "/add")
-    public Stall saveStall(@RequestBody Stall stall) {
-        return stallService.saveStall(stall);
+    public ResponseEntity<?> saveStall(@RequestBody Stall stall) {
+    	Stall saveStall = stallService.saveStall(stall);
+    	 if(saveStall==null) {
+    		 return ResponseEntity.badRequest().body(new MessageResponse("Stall has not created"));
+    	 }
+        return  ResponseEntity.ok(new MessageResponse("Stall has created"));
     }
+    
+    
     @GetMapping(value = "/all")
     public List<Stall> fetchStallList() {
         return stallService.fetchStallList();

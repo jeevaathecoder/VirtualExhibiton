@@ -3,16 +3,26 @@ package com.virtualexhibiton.services;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import com.virtualexhibiton.model.User;
+import com.virtualexhibiton.model.UserRole;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class UserDetailsImpl implements UserDetails {
+	
+	
+	@Autowired
+	private static UserService user_Servcie;
+	
+	
     private static final long serialVersionUID = 1L;
 
     private Long id;
@@ -48,10 +58,12 @@ public class UserDetailsImpl implements UserDetails {
     }
 
     public static UserDetailsImpl build(User user) {
-        List<GrantedAuthority> authorities =user.getRoles().stream()
-                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.name()))
-                .collect(Collectors.toList());
-
+    	UserRole role = user_Servcie.get(user.getUser_type_id());
+//        List<GrantedAuthority> authorities =user.getRoles().stream()
+//                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.name()))
+//                .collect(Collectors.toList());
+    	List<GrantedAuthority> authorities = new ArrayList<>();
+    	authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getUser_role()));
         return new UserDetailsImpl(
                 user.getId(),
                 user.getEmail(),

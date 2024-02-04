@@ -1,5 +1,6 @@
 package com.virtualexhibiton.config;
 
+import com.virtualexhibiton.constants.VirtualexhibitionConstants;
 import com.virtualexhibiton.model.User;
 import com.virtualexhibiton.model.UserRole;
 import com.virtualexhibiton.repository.UserRepository;
@@ -56,21 +57,20 @@ public class AuthController {
                 return ResponseEntity.badRequest().body(new MessageResponse("Username is already taken!"));
             }
 
-            // Create new user's account
-            User user = new User(
-                    signUpRequest.getFirstname(),
-                    signUpRequest.getLastname(),
-                    signUpRequest.getEmail(),
-                    passwordEncoder.encode(signUpRequest.getPassword()),
-                    signUpRequest.getMobile(),
-                    signUpRequest.getProfile()
-            );
+            User user = new User();
+            user.setEmail(signUpRequest.getEmail());
+            user.setFirstname(signUpRequest.getFirstname());
+            user.setLastname(signUpRequest.getLastname());
+            user.setMobile(signUpRequest.getMobile());
+            user.setProfile(signUpRequest.getProfile());
+            user.setPassword(signUpRequest.getPassword());
+            user.setStatus(VirtualexhibitionConstants.UNAUTHORIZED_USER);
+          
+            
 
-            Set<UserRole> roles = signUpRequest.getRoles().stream()
-                    .map(UserRole::valueOf)
-                    .collect(Collectors.toSet());
+         
 
-            user.setRoles(roles);
+           
             userRepository.save(user);
 
             return ResponseEntity.ok(new MessageResponse("User registered successfully!"));

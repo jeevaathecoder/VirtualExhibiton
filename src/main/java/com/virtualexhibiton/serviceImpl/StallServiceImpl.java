@@ -1,21 +1,36 @@
-package com.virtualexhibiton.services;
+package com.virtualexhibiton.serviceImpl;
 
 import com.virtualexhibiton.model.Stall;
+import com.virtualexhibiton.model.User;
 import com.virtualexhibiton.repository.StallRepository;
+import com.virtualexhibiton.repository.UserRepository;
+import com.virtualexhibiton.services.StallService;
+
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
+@Slf4j
 public class StallServiceImpl implements StallService{
 
    @Autowired
    private StallRepository stallRepository;
+   @Autowired
+   private UserRepository userRepository;
+  
 
     @Override
     public Stall saveStall(Stall stall) {
+    	Optional<User> isUserExisted = userRepository.findById(stall.getUser().getId());
+    	if(isUserExisted.isPresent()) {
+    		return null;
+    	}
         return stallRepository.save(stall);
     }
 

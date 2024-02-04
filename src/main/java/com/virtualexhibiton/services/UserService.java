@@ -1,5 +1,6 @@
 package com.virtualexhibiton.services;
 
+import com.virtualexhibiton.constants.VirtualexhibitionConstants;
 import com.virtualexhibiton.model.User;
 import com.virtualexhibiton.model.UserRole;
 import com.virtualexhibiton.repository.UserRepository;
@@ -16,13 +17,16 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
-
+    
+    @Autowired
+    private UserRoleService userRoleservice;
+    
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     public void registerUser(SignupRequest signUpRequest) {
         String email = signUpRequest.getEmail();
-
+        String role =null;
         // Check if the username or email is already taken
         if (userRepository.existsByEmail(email)) {
             throw new RuntimeException("Username is already taken!");
@@ -31,22 +35,24 @@ public class UserService {
         if (userRepository.existsByEmail(email)) {
             throw new RuntimeException("Email is already in use!");
         }
-
         // Create new user's account
-        User user = new User(
-                signUpRequest.getFirstname(),
-                signUpRequest.getLastname(),
-                email,
-                passwordEncoder.encode(signUpRequest.getPassword()),
-                signUpRequest.getMobile(),
-                signUpRequest.getProfile()
-        );
-
-        Set<UserRole> roles = signUpRequest.getRoles().stream()
-                .map(UserRole::valueOf)
-                .collect(Collectors.toSet());
-
-        user.setRoles(roles);
+        User user = new User();
+        user.setEmail(signUpRequest.getEmail());
+        user.setFirstname(signUpRequest.getFirstname());
+        user.setLastname(signUpRequest.getLastname());
+        user.setMobile(signUpRequest.getMobile());
+        user.setProfile(signUpRequest.getProfile());
+        user.setStatus(VirtualexhibitionConstants.UNAUTHORIZED_USER);
+        role=signUpRequest.getRoles().get(0);
+        UserRole userRole = userRoleservice.get(role);
+        user.setUser_type_id(userRole.getId());
         userRepository.save(user);
     }
+
+	public UserRole get(Long user_type_id) {
+		UserRole  user_role =userRoleservice.findRoleById(user_type_id);
+		return user_role;
+	}
+
+
 }

@@ -33,9 +33,9 @@ public class Stall {
     private String brochureUrl;
 
     @OneToOne
-    @JoinColumn(name = "exhibitor_id")
-    private Exhibitor exhibitor;
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    // Other fields and methods...
+    
 }
 

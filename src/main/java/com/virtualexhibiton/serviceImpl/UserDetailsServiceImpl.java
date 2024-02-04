@@ -1,8 +1,10 @@
-package com.virtualexhibiton.services;
+package com.virtualexhibiton.serviceImpl;
 
 
 import com.virtualexhibiton.model.User;
 import com.virtualexhibiton.repository.UserRepository;
+import com.virtualexhibiton.services.UserDetailsImpl;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

@@ -7,13 +7,17 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Slf4j
 public class SignupRequest {
 
     @NotBlank
@@ -35,8 +39,7 @@ public class SignupRequest {
     @Lob
     private byte[] profile;
 
+    private List<String> roles = new ArrayList<>();
 
-    private Set<String> roles = new HashSet<>();
-
-    // Getters and setters...
+    
 }
