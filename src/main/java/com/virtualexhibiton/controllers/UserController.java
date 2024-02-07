@@ -24,10 +24,15 @@ public class UserController {
 	private IUserService userService;
 	
 
+//	@PostMapping("/register")
+//	public ResponseEntity<?> register(@Valid @RequestBody LoginRequest loginRequest){
+//		// we have implement such that it has to send token with it.
+//		return "Here we to send jwt token to user";
+//	}
 	@PostMapping("/register")
-	public ResponseEntity<?> register(@Valid @RequestBody LoginRequest loginRequest){
+	public String register(@Valid @RequestBody LoginRequest loginRequest){
 		// we have implement such that it has to send token with it.
-		return null;
+		return "Here we have send jwt token to user";
 	}
 	
 	@PostMapping("/createuser")
