@@ -1,7 +1,7 @@
 package com.virtualexhibiton.request;
 
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -10,18 +10,13 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Data
 public class UserRequest {
-	
-	
-	@NotBlank
-	@Email
-	private String emailId;
-	
-	@NotBlank
-	private Long userId;
-	
-	@NotBlank
-	private Long admin_user_id;
-	
 
+    @NotNull
+    @Email
+    private String emailId;
 
+    @NotNull
+    private Long userId;
+
+    private Long admin_user_id;
 }

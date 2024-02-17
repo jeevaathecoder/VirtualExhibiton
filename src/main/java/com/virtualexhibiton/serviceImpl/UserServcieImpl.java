@@ -59,7 +59,7 @@ public class UserServcieImpl implements IUserService {
 		   else if(role.equals(VirtualexhibitionConstants.EXHIBITOR)||role.equals(VirtualexhibitionConstants.USER)) {
 			   return "ENTER ID IS USER OR EXHIBITOR";
 		   }
-		   else if(isEXHIBITOR!=null) {
+		   else if(isEXHIBITOR==null) {
 			   return VirtualexhibitionConstants.INVALID_USER;
 		   }
 		   else if(roleofUser.equals(VirtualexhibitionConstants.USER)) {
